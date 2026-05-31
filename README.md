@@ -2,7 +2,7 @@
 
 **A six-specialist AI research system for AEO, GEO, SOM, RAG, and Agentic Marketing.**
 
-[![Docs](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://<GH_USER>.github.io/aeo-geo-researcher/)
+[![Docs](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://usedcolouringbook.github.io/aeo-geo-researcher/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Competition](https://img.shields.io/badge/Clief%20Notes-Competition%20%236-orange)](https://clief.substack.com)
 
@@ -150,4 +150,4 @@ Built using Interpretable Context Methodology (ICM) — filesystem structure enc
 Submitted to Clief Notes Weekly Competition #6: The Researcher.
 
 <!-- Swap <GH_USER> for the real GitHub username/org at submission. -->
-[Full documentation ->](https://<GH_USER>.github.io/aeo-geo-researcher/)
+[Full documentation ->](https://usedcolouringbook.github.io/aeo-geo-researcher/)
