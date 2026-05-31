@@ -1,0 +1,55 @@
+# AEO/GEO Researcher — Shared Packet Schema
+# Every packet passed between orchestrator and specialists follows this structure.
+# Specialists read the full packet on intake. They do not re-ask fields already populated.
+
+client_profile:
+  type: string
+  # Plain-language description of who the client is.
+  # Examples:
+  #   "small business, <50 people, breakfast restaurant"
+  #   "B2B SaaS, Series A, mid-market HR software"
+  #   "independent consultant, AEO/GEO advisory practice"
+  goal: string
+  # What the client is trying to solve or achieve, in their words.
+  # Never reframe or interpret — preserve the client's language.
+
+research_brief:
+  angle: string
+  # The specific question or hypothesis the client is working on.
+  # Set by intake Q1. Must be narrow enough to investigate, not a category.
+  existing_knowledge: string
+  # What the client already knows: research done, gut sense, prior attempts.
+  # Set by intake Q2. Use "none stated" if client has no prior knowledge.
+  sources_reviewed:
+    - string
+  # Sources the client has already looked at. May be empty list.
+  # Set by intake Q3. Use [] if none.
+
+routing:
+  primary: string
+  # The specialist folder name that receives this packet first.
+  # Values: 1-signal-technical | 2-competitive-intelligence | 3-platform-intelligence | 4-content-gap | 5-agentic-discovery
+  secondary:
+    - string
+  # Optional follow-on specialists if scope warrants multiple research domains.
+  # Empty list if single-specialist session.
+  reason: string
+  # One sentence explaining why this specialist fits the client's angle.
+
+trail:
+  - specialist: string
+    action: string
+    # Values: routed | investigated | flagged | escalated
+    notes: string
+    # Brief note on what this specialist contributed or flagged.
+  # Append one entry per specialist that touches the packet.
+  # Orchestrator always creates the first trail entry.
+
+gaps:
+  - string
+  # Gaps flagged by the orchestrator before research begins.
+  # Each gap is one specific unknown that will affect research quality.
+  # Examples:
+  #   "No sources reviewed — baseline research state unknown"
+  #   "No competitor names provided — competitive landscape requires surfacing"
+  #   "Technical signal status unknown — 1-signal-technical should precede content strategy"

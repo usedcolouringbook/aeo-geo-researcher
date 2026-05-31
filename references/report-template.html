@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AEO/GEO Research Brief — {{CLIENT_TYPE}}</title>
+<style>
+  :root {
+    --green: #16a34a; --amber: #d97706; --red: #dc2626;
+    --critical: #7c3aed; --high: #dc2626; --medium: #d97706; --low: #6b7280;
+    --bg: #f9fafb; --card: #ffffff; --border: #e5e7eb; --text: #111827; --muted: #6b7280;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  .page { max-width: 900px; margin: 0 auto; padding: 2rem; }
+  header { border-bottom: 3px solid var(--text); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+  header h1 { font-size: 1.75rem; font-weight: 700; }
+  header .meta { color: var(--muted); font-size: 0.9rem; margin-top: 0.25rem; }
+  .section { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; }
+  .section h2 { font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 1rem; }
+  .exec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .exec-item label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); display: block; }
+  .exec-item p { font-size: 0.95rem; margin-top: 0.2rem; }
+  .legend { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .dot-confirmed { background: var(--green); } .dot-unconfirmed { background: var(--amber); } .dot-emerging { background: var(--red); }
+  .domain { margin-bottom: 1.5rem; } .domain:last-child { margin-bottom: 0; }
+  .domain-header { font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; }
+  .domain-summary { color: var(--muted); font-size: 0.9rem; margin-bottom: 0.75rem; }
+  .finding { border-left: 3px solid var(--border); padding: 0.75rem 1rem; margin-bottom: 0.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .finding-badges { display: flex; flex-direction: column; gap: 0.3rem; flex-shrink: 0; }
+  .badge { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.15rem 0.5rem; border-radius: 4px; white-space: nowrap; }
+  .badge-confirmed { background: #dcfce7; color: var(--green); } .badge-unconfirmed { background: #fef3c7; color: var(--amber); } .badge-emerging { background: #fee2e2; color: var(--red); }
+  .badge-critical { background: #ede9fe; color: var(--critical); } .badge-high { background: #fee2e2; color: var(--high); } .badge-medium { background: #fef3c7; color: var(--medium); } .badge-low { background: #f3f4f6; color: var(--low); }
+  .finding-content { flex: 1; } .finding-signal { font-weight: 600; font-size: 0.95rem; } .finding-detail { font-size: 0.85rem; color: var(--muted); margin-top: 0.25rem; }
+  .matrix-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid var(--border); } .matrix-row:last-child { border-bottom: none; }
+  .matrix-signal { font-size: 0.9rem; } .matrix-domain { font-size: 0.8rem; color: var(--muted); margin-top: 0.1rem; }
+  .gap-list { list-style: none; } .gap-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; } .gap-list li:last-child { border-bottom: none; }
+  .gap-list li::before { content: '?  '; color: var(--muted); font-weight: 700; }
+  .next-move { font-size: 1rem; font-weight: 600; }
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+  @media print { body { background: white; } .section { break-inside: avoid; } .badge-confirmed,.badge-unconfirmed,.badge-emerging,.badge-critical,.badge-high,.badge-medium { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>AEO/GEO Research Brief</h1>
+    <div class="meta">{{CLIENT_TYPE}} · {{SESSION_DATE}}</div>
+  </header>
+
+  <div class="section">
+    <h2>Executive Summary</h2>
+    <div class="exec-grid">
+      <div class="exec-item"><label>Client Type</label><p>{{CLIENT_TYPE}}</p></div>
+      <div class="exec-item"><label>Session Date</label><p>{{SESSION_DATE}}</p></div>
+      <div class="exec-item" style="grid-column:1/-1"><label>Goal</label><p>{{CLIENT_GOAL}}</p></div>
+      <div class="exec-item" style="grid-column:1/-1"><label>Research Angle</label><p>{{SESSION_ANGLE}}</p></div>
+      <div class="exec-item" style="grid-column:1/-1"><label>Specialists Engaged</label><p>{{SPECIALISTS_ENGAGED}}</p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Signal Legend</h2>
+    <div class="legend">
+      <div class="legend-item"><div class="dot dot-confirmed"></div><strong>Confirmed</strong> — directly observed or verified</div>
+      <div class="legend-item"><div class="dot dot-unconfirmed"></div><strong>Unconfirmed</strong> — inferred, needs verification</div>
+      <div class="legend-item"><div class="dot dot-emerging"></div><strong>Emerging</strong> — pattern observed, not yet established</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Findings by Domain</h2>
+    <!-- AI: Replace this comment with one .domain block per specialist engaged.
+         Pattern for each domain:
+         <div class="domain">
+           <div class="domain-header">{{DOMAIN_NAME}}</div>
+           <div class="domain-summary">{{DOMAIN_SUMMARY}}</div>
+           [one .finding block per finding]
+         </div>
+
+         Pattern for each finding:
+         <div class="finding">
+           <div class="finding-badges">
+             <span class="badge badge-{{STATUS}}">{{STATUS}}</span>
+             <span class="badge badge-{{PRIORITY}}">{{PRIORITY}}</span>
+           </div>
+           <div class="finding-content">
+             <div class="finding-signal">{{SIGNAL}}</div>
+             <div class="finding-detail">{{DETAIL}}</div>
+           </div>
+         </div>
+
+         STATUS values: confirmed | unconfirmed | emerging
+         PRIORITY values: critical | high | medium | low
+    -->
+  </div>
+
+  <div class="section">
+    <h2>Priority Matrix</h2>
+    <!-- AI: Replace this comment with one .matrix-row per finding, sorted critical → high → medium → low.
+         Pattern:
+         <div class="matrix-row">
+           <div>
+             <div class="matrix-signal">{{SIGNAL}}</div>
+             <div class="matrix-domain">{{DOMAIN_NAME}}</div>
+           </div>
+           <div style="display:flex;gap:0.5rem">
+             <span class="badge badge-{{STATUS}}">{{STATUS}}</span>
+             <span class="badge badge-{{PRIORITY}}">{{PRIORITY}}</span>
+           </div>
+         </div>
+    -->
+  </div>
+
+  <div class="section">
+    <h2>Gap Map</h2>
+    <ul class="gap-list">
+      <!-- AI: Replace this comment with one <li>{{GAP}}</li> per gap identified. -->
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Next Research Move</h2>
+    <p class="next-move">{{NEXT_RESEARCH_MOVE}}</p>
+  </div>
+
+  <footer>Generated by AEO/GEO Researcher · {{SESSION_DATE}}</footer>
+</div>
+</body>
+</html>

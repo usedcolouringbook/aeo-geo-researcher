@@ -1,0 +1,4 @@
+.DS_Store
+github-pages/site/
+__pycache__/
+*.pyc

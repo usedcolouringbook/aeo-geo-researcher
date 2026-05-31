@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AEO/GEO Research Brief</title>
+<style>
+  :root {
+    --green: #16a34a;
+    --amber: #d97706;
+    --red: #dc2626;
+    --critical: #7c3aed;
+    --high: #dc2626;
+    --medium: #d97706;
+    --low: #6b7280;
+    --bg: #f9fafb;
+    --card: #ffffff;
+    --border: #e5e7eb;
+    --text: #111827;
+    --muted: #6b7280;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  .page { max-width: 900px; margin: 0 auto; padding: 2rem; }
+  header { border-bottom: 3px solid var(--text); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+  header h1 { font-size: 1.75rem; font-weight: 700; }
+  header .meta { color: var(--muted); font-size: 0.9rem; margin-top: 0.25rem; }
+  .section { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; }
+  .section h2 { font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 1rem; }
+  .exec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .exec-item label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); display: block; }
+  .exec-item p { font-size: 0.95rem; margin-top: 0.2rem; }
+  .legend { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .dot-confirmed { background: var(--green); }
+  .dot-unconfirmed { background: var(--amber); }
+  .dot-emerging { background: var(--red); }
+  .domain { margin-bottom: 1.5rem; }
+  .domain:last-child { margin-bottom: 0; }
+  .domain-header { font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; }
+  .domain-summary { color: var(--muted); font-size: 0.9rem; margin-bottom: 0.75rem; }
+  .finding { border-left: 3px solid var(--border); padding: 0.75rem 1rem; margin-bottom: 0.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .finding-badges { display: flex; flex-direction: column; gap: 0.3rem; flex-shrink: 0; }
+  .badge { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.15rem 0.5rem; border-radius: 4px; white-space: nowrap; }
+  .badge-confirmed { background: #dcfce7; color: var(--green); }
+  .badge-unconfirmed { background: #fef3c7; color: var(--amber); }
+  .badge-emerging { background: #fee2e2; color: var(--red); }
+  .badge-critical { background: #ede9fe; color: var(--critical); }
+  .badge-high { background: #fee2e2; color: var(--high); }
+  .badge-medium { background: #fef3c7; color: var(--medium); }
+  .badge-low { background: #f3f4f6; color: var(--low); }
+  .finding-content { flex: 1; }
+  .finding-signal { font-weight: 600; font-size: 0.95rem; }
+  .finding-detail { font-size: 0.85rem; color: var(--muted); margin-top: 0.25rem; }
+  .matrix-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid var(--border); }
+  .matrix-row:last-child { border-bottom: none; }
+  .matrix-signal { font-size: 0.9rem; }
+  .matrix-domain { font-size: 0.8rem; color: var(--muted); margin-top: 0.1rem; }
+  .gap-list { list-style: none; }
+  .gap-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+  .gap-list li:last-child { border-bottom: none; }
+  .gap-list li::before { content: '?  '; color: var(--muted); font-weight: 700; }
+  .next-move { font-size: 1rem; font-weight: 600; }
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+
+  @media print {
+    body { background: white; }
+    .page { padding: 1rem; }
+    .section { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; }
+    .badge-confirmed { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .badge-unconfirmed { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .badge-emerging { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .badge-critical { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .badge-high { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .badge-medium { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>AEO/GEO Research Brief</h1>
+    <div class="meta" id="meta"></div>
+  </header>
+
+  <div class="section">
+    <h2>Executive Summary</h2>
+    <div class="exec-grid" id="exec-grid"></div>
+  </div>
+
+  <div class="section">
+    <h2>Signal Legend</h2>
+    <div class="legend">
+      <div class="legend-item"><div class="dot dot-confirmed"></div><strong>Confirmed</strong> — directly observed or verified</div>
+      <div class="legend-item"><div class="dot dot-unconfirmed"></div><strong>Unconfirmed</strong> — inferred, needs verification</div>
+      <div class="legend-item"><div class="dot dot-emerging"></div><strong>Emerging</strong> — pattern observed, not yet established</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Findings by Domain</h2>
+    <div id="findings"></div>
+  </div>
+
+  <div class="section">
+    <h2>Priority Matrix</h2>
+    <div id="matrix"></div>
+  </div>
+
+  <div class="section">
+    <h2>Gap Map</h2>
+    <ul class="gap-list" id="gaps"></ul>
+  </div>
+
+  <div class="section">
+    <h2>Next Research Move</h2>
+    <p class="next-move" id="next-move"></p>
+  </div>
+
+  <footer>Generated by AEO/GEO Researcher · <span id="footer-date"></span></footer>
+</div>
+
+<script>
+const BRIEF = {
+  "client": {
+    "type": "Small business owner — independent editorial directory (slocoffeeguide.com)",
+    "goal": "Understand why slocoffeeguide.com isn't getting AI citation traction despite perceived AEO/GEO compatibility",
+    "date": "2026-05-30"
+  },
+  "session": {
+    "angle": "Technical and platform diagnosis of AEO/GEO underperformance — schema, crawl signals, Bing indexation, and per-platform citation presence",
+    "specialists_engaged": [
+      "Orchestrator",
+      "Signal & Technical",
+      "Platform Intelligence"
+    ]
+  },
+  "findings": [
+    {
+      "domain": "Crawl & Indexation",
+      "summary": "AI bot access is correctly configured. Critical gap: zero Bing indexation, blocking ChatGPT and Copilot entirely.",
+      "items": [
+        {
+          "signal": "Bing indexation — 0 results (site:slocoffeeguide.com)",
+          "detail": "ChatGPT and Copilot are Bing-dependent. Zero Bing indexation = complete block on both platforms regardless of content quality or schema. Fix: submit to Bing Webmaster Tools.",
+          "status": "confirmed",
+          "priority": "critical"
+        },
+        {
+          "signal": "AI bot permissions — all major crawlers permitted",
+          "detail": "GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended, Bingbot, Googlebot all explicitly allowed in robots.txt. llms.txt and llms-full.txt granted access.",
+          "status": "confirmed",
+          "priority": "low"
+        },
+        {
+          "signal": "llms.txt and llms-full.txt — present and populated",
+          "detail": "Both agent-native endpoints exist and are correctly structured. llms-full.txt contains full tabular database for all 70 locations. Strongest asset in the technical stack.",
+          "status": "confirmed",
+          "priority": "low"
+        }
+      ]
+    },
+    {
+      "domain": "Schema Markup",
+      "summary": "Schema is present and rich — far better than most sites. Four internal conflicts confirmed from raw HTML that undermine structured data trust signals.",
+      "items": [
+        {
+          "signal": "Duplicate conflicting @id blocks — Organization and WebSite",
+          "detail": "Homepage contains two Organization nodes and two WebSite nodes with identical @id URIs but different content. Parser attempts to merge conflicting fields — ambiguous fields get dropped. Fix: consolidate to one of each per page.",
+          "status": "confirmed",
+          "priority": "high"
+        },
+        {
+          "signal": "sameAs self-reference — zero entity authority signal",
+          "detail": "One Organization block sameAs points to slocoffeeguide.com itself. sameAs exists to connect entities to external knowledge graph nodes (Wikidata, Wikipedia). Self-reference provides no signal. Fix: create Wikidata entry for SLO Coffee Guide; use that as sameAs.",
+          "status": "confirmed",
+          "priority": "high"
+        },
+        {
+          "signal": "LocalBusiness schema applied to the guide, not a coffee shop",
+          "detail": "The guide itself is marked as a LocalBusiness at SLO's geo coordinates. The guide is a directory, not a physical business. This misrepresents the entity type to AI knowledge graphs. Fix: remove LocalBusiness from the guide's schema.",
+          "status": "confirmed",
+          "priority": "medium"
+        },
+        {
+          "signal": "Data inconsistency — 82+ shops vs 70 across all sources",
+          "detail": "Organization description says 82+. ItemList numberOfItems = 70. FAQ schema = 70. llms-full.txt = 70. Conflicting figures across schema and agent-native files degrade trust signals. Fix: standardise on one accurate number everywhere.",
+          "status": "confirmed",
+          "priority": "medium"
+        },
+        {
+          "signal": "Schema types present — FAQPage, Speakable, Dataset, CafeOrCoffeeShop, AggregateRating",
+          "detail": "FAQPage (12 Q&As), Speakable, Dataset pointing to llms-full.txt, and CafeOrCoffeeShop with AggregateRating on top 10 listings all confirmed in raw HTML. Structurally sound where not conflicting.",
+          "status": "confirmed",
+          "priority": "low"
+        }
+      ]
+    },
+    {
+      "domain": "Platform Citation",
+      "summary": "Perplexity is the active citation channel. ChatGPT and Copilot are blocked. Google AI Overviews unverified. Schema fixes are most impactful on Google.",
+      "items": [
+        {
+          "signal": "Perplexity — cited at position 4 for 'best coffee shops in San Luis Obispo'",
+          "detail": "slocoffeeguide.com confirmed in Perplexity results, below visitSLO, wandering.com, and coffeezone.com. Technical access is clear. Position gap is authority, not access — off-site signals (Reddit, entity directories) are the lever.",
+          "status": "confirmed",
+          "priority": "medium"
+        },
+        {
+          "signal": "ChatGPT — blocked (Bing dependency)",
+          "detail": "No Bing indexation = no ChatGPT citation capability. OAI-SearchBot is permitted but indexes from Bing — Bing must index the site first.",
+          "status": "confirmed",
+          "priority": "critical"
+        },
+        {
+          "signal": "Microsoft Copilot — blocked (Bing dependency)",
+          "detail": "Same Bing dependency as ChatGPT. Both platforms unblocked by a single Bing Webmaster Tools submission.",
+          "status": "confirmed",
+          "priority": "critical"
+        },
+        {
+          "signal": "Google AI Overviews — citation presence unverified",
+          "detail": "Googlebot and Google-Extended permitted. Core search ranking is the prerequisite for AI Overview inclusion. Schema conflicts (duplicate @id, sameAs) are most costly on Google, the highest schema-sensitive platform.",
+          "status": "unconfirmed",
+          "priority": "medium"
+        }
+      ]
+    }
+  ],
+  "gaps": [
+    "Google AI Overview citation presence — requires direct Google search test on target queries",
+    "Individual shop page factual density — 76 pages in sitemap; chunk quality not assessed",
+    "Reddit presence — 21–40% of Google AI Overview citations come from Reddit; current presence unknown",
+    "Competitor citation landscape — which sites are ranking above slocoffeeguide.com across platforms not fully mapped",
+    "Google organic ranking for target queries — prerequisite for AI Overview inclusion, not verified"
+  ],
+  "next_move": "Submit slocoffeeguide.com to Bing Webmaster Tools (bing.com/webmasters) — 30-minute fix that unblocks ChatGPT and Copilot citation capability immediately. Then run 'best coffee shops San Luis Obispo' on Google and note whether slocoffeeguide.com appears in AI Overviews."
+};
+
+function badge(cls, text) {
+  return `<span class="badge badge-${cls}">${text}</span>`;
+}
+
+function render(data) {
+  document.title = `Research Brief — ${data.client.type}`;
+
+  document.getElementById('meta').textContent =
+    `${data.client.type} · ${data.client.date}`;
+
+  document.getElementById('exec-grid').innerHTML = `
+    <div class="exec-item"><label>Client Type</label><p>${data.client.type}</p></div>
+    <div class="exec-item"><label>Session Date</label><p>${data.client.date}</p></div>
+    <div class="exec-item" style="grid-column:1/-1"><label>Goal</label><p>${data.client.goal}</p></div>
+    <div class="exec-item" style="grid-column:1/-1"><label>Research Angle</label><p>${data.session.angle}</p></div>
+    <div class="exec-item" style="grid-column:1/-1"><label>Specialists Engaged</label><p>${data.session.specialists_engaged.join(' · ')}</p></div>
+  `;
+
+  const findingsEl = document.getElementById('findings');
+  findingsEl.innerHTML = data.findings.map(domain => `
+    <div class="domain">
+      <div class="domain-header">${domain.domain}</div>
+      <div class="domain-summary">${domain.summary}</div>
+      ${domain.items.map(item => `
+        <div class="finding">
+          <div class="finding-badges">
+            ${badge(item.status, item.status)}
+            ${badge(item.priority, item.priority)}
+          </div>
+          <div class="finding-content">
+            <div class="finding-signal">${item.signal}</div>
+            <div class="finding-detail">${item.detail}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+
+  const allItems = data.findings.flatMap(d =>
+    d.items.map(i => ({ ...i, domain: d.domain }))
+  );
+  const priorityOrder = ['critical', 'high', 'medium', 'low'];
+  allItems.sort((a, b) =>
+    priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority)
+  );
+
+  document.getElementById('matrix').innerHTML = allItems.map(item => `
+    <div class="matrix-row">
+      <div>
+        <div class="matrix-signal">${item.signal}</div>
+        <div class="matrix-domain">${item.domain}</div>
+      </div>
+      <div style="display:flex;gap:0.5rem">
+        ${badge(item.status, item.status)}
+        ${badge(item.priority, item.priority)}
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('gaps').innerHTML =
+    data.gaps.map(g => `<li>${g}</li>`).join('');
+
+  document.getElementById('next-move').textContent = data.next_move;
+
+  document.getElementById('footer-date').textContent =
+    new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+render(BRIEF);
+</script>
+</body>
+</html>

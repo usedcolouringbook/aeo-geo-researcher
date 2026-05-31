@@ -1,0 +1,63 @@
+site_name: AEO/GEO Researcher
+docs_dir: docs
+site_description: A six-specialist AI research system for AEO, GEO, SOM, RAG, and Agentic Marketing
+site_url: https://usedcolouringbook.github.io/aeo-geo-researcher/
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.instant
+    - navigation.top
+    - search.suggest
+    - search.highlight
+
+markdown_extensions:
+  - attr_list
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - toc:
+      permalink: true
+
+exclude_docs: |
+  _dev/
+
+nav:
+  - Home: index.md
+  - How It Works: how-it-works.md
+  - Quick Start:
+    - Claude Projects: quick-start/claude-projects.md
+    - Claude Code: quick-start/claude-code.md
+  - Specialists:
+    - Orchestrator: specialists/orchestrator.md
+    - Signal & Technical: specialists/signal-technical.md
+    - Competitive Intelligence: specialists/competitive-intelligence.md
+    - Platform Intelligence: specialists/platform-intelligence.md
+    - Content Gap: specialists/content-gap.md
+    - Agentic Discovery: specialists/agentic-discovery.md
+  - Research Procedures:
+    - Overview: procedures/overview.md
+  - Research Brief:
+    - Overview: research-brief/overview.md
+    - Claude Projects: research-brief/claude-projects.md
+    - Claude Code: research-brief/claude-code.md
+  - Reference:
+    - Glossary: reference/glossary.md
+    - Signal Flags: reference/signal-flags.md
